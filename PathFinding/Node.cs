@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node2 : MonoBehaviour
+public class Node : MonoBehaviour
 {
 	[SerializeField] float neighboursDistance = 10f;
 	[SerializeField] LayerMask nodeLayer;
 	[SerializeField] LayerMask obstableLayer;
 	[SerializeField] public bool IsBlocked;
 	[SerializeField] public float CurrentDistance = Mathf.Infinity;
-	[SerializeField] Node2[] possibleNode2s;
+	[SerializeField] Node[] possibleNodes;
 
-	Dictionary<Node2, float> neighbours = new Dictionary<Node2, float>();
+	Dictionary<Node, float> neighbours = new Dictionary<Node, float>();
 
-	public Dictionary<Node2, float> Neighbours => neighbours;
+	public Dictionary<Node, float> Neighbours => neighbours;
 
-	public Node2 PreviousNode { get; set; }
+	public Node PreviousNode { get; set; }
 	
 	public float H { get; set; }
 	public float G { get; set; }
 	public float F => H + G; 
 
-	public Node2[] PossibleNode2s => possibleNode2s;
+	public Node[] PossibleNodes => possibleNodes;
 
 	public LayerMask ObstableLayer => obstableLayer;
 
@@ -50,7 +50,7 @@ public class Node2 : MonoBehaviour
 			Vector3 dir = (neighboursColl[i].transform.position - transform.position).normalized;
 			bool hit = Physics.Raycast(transform.position, dir,out RaycastHit hitInfo, distanceToNode, obstableLayer, QueryTriggerInteraction.Ignore);
 
-			if(!hit && !IsBlocked) neighbours.Add(neighboursColl[i].GetComponent<Node2>(), distanceToNode);
+			if(!hit && !IsBlocked) neighbours.Add(neighboursColl[i].GetComponent<Node>(), distanceToNode);
 		}
 	}
 
